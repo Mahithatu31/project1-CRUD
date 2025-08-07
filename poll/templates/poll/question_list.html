@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Question List</title>
+</head>
+<body>
+    <h1>All Questions</h1>
+
+    {% for question in questions %}
+        <h3>{{ question.question_text }}</h3>
+
+        <ul>
+        {% for choice in question.choice_set.all %}
+            <li>
+                {{ choice.choice_text }} 
+                [<a href="{% url 'choice_update' choice.pk %}">Edit</a>]
+                [<a href="{% url 'choice_delete' choice.pk %}">Delete</a>]
+            </li>
+        {% empty %}
+            <li>No choices yet.</li>
+        {% endfor %}
+        </ul>
+
+        <a href="{% url 'choice_create' %}">Add New Choice</a>
+        <a href="{% url 'question_delete' question.pk %}">Delete Question</a>
+
+        <hr>
+    {% empty %}
+        <p>No questions available.</p>
+    {% endfor %}
+</body>
+</html>
